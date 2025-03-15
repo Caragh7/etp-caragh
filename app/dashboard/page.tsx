@@ -1,5 +1,4 @@
 "use client";
-
 import { Button } from "flowbite-react";
 import { useRouter } from "next/navigation";
 import Footer from "../components/Footer";
@@ -22,6 +21,7 @@ export default function Page() {
               <ul className="space-y-4">
                 <li>
                   <a
+                    onClick={() => router.push("/dashboard/my-events")}
                     href="#"
                     className="block p-2 text-gray-800 rounded hover:bg-gray-200"
                   >
@@ -30,6 +30,7 @@ export default function Page() {
                 </li>
                 <li>
                   <a
+                    onClick={() => router.push("/dashboard/view-venues")}
                     href="#"
                     className="block p-2 text-gray-800 rounded hover:bg-gray-200"
                   >
@@ -38,18 +39,11 @@ export default function Page() {
                 </li>
                 <li>
                   <a
+                    onClick={() => router.push("/dashboard/analytics")}
                     href="#"
                     className="block p-2 text-gray-800 rounded hover:bg-gray-200"
                   >
                     📊 Analytics
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="block p-2 text-gray-800 rounded hover:bg-gray-200"
-                  >
-                    ⚙ Settings
                   </a>
                 </li>
               </ul>
@@ -90,7 +84,7 @@ export default function Page() {
                     Manage Events
                   </h2>
                   <p className="text-gray-600">
-                    Create and customize your own event.
+                    Create and customize your own event
                   </p>
                   <Button
                     className="mt-4 justify-self-stretch  text-center px-4 py-2"
@@ -105,9 +99,7 @@ export default function Page() {
                   <h2 className="text-xl text-gray-800 font-bold mb-4">
                     Manage Venues
                   </h2>
-                  <p className="text-gray-600">
-                    Look for the perfect venue for your events.
-                  </p>
+                  <p className="text-gray-600">Find your perfect venue</p>
                   <Button
                     className="mt-4 justify-self-stretch  text-center px-4 py-2"
                     gradientDuoTone="purpleToBlue"

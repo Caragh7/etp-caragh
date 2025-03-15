@@ -1,6 +1,6 @@
-// These styles apply to every route in the application
 import "./globals.css";
 import Header from "./components/Header";
+import Providers from "./providers";
 
 export const metadata = {
   title: "Event Ticketing Platform",
@@ -19,7 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="bg-white flex flex-col min-h-screen w-full overflow-x-hidden">
         <Header />
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

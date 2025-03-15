@@ -1,5 +1,4 @@
 "use client";
-
 import { Navbar } from "flowbite-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -15,7 +14,6 @@ export default function Header() {
       <Navbar.Brand href="#" className="flex items-center space-x-2">
         <div className="relative w-8 h-8 flex-shrink-0">
           {" "}
-          {/* Fixed size for the logo */}
           <Image
             src="/etp-caragh/tickets.svg"
             fill
@@ -36,12 +34,11 @@ export default function Header() {
         <div className="flex flex-col md:flex-row md:space-x-8 text-md py-3 px-4 md:py-0">
           <Navbar.Link
             as={Link}
-            href="#"
+            href="/"
             className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500"
           >
             Home
           </Navbar.Link>
-          {/* change these to next links  */}
           <Navbar.Link
             as={Link}
             href="/dashboard"
