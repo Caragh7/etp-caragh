@@ -12,7 +12,7 @@ import {
   Legend,
   ArcElement,
 } from "chart.js";
-import FooterComponent from "@/app/components/Footer";
+
 import Footer from "@/app/components/Footer";
 
 // register chart.js components
