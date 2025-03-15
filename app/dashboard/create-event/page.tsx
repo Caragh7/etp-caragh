@@ -9,10 +9,12 @@ import {
   Spinner,
 } from "flowbite-react";
 import React, { useState, ChangeEvent, FormEvent } from "react";
-import VenueSelector from "../VenueSelector";
+import VenueSelector from "../../selectors/VenueSelector";
 import { useDispatch } from "react-redux";
 import { addMyEvent } from "@/app/store/myEventsSlice";
 import Link from "next/link";
+
+import GenreSelector from "@/app/selectors/GenreSelector";
 
 interface FormData {
   title: string;
@@ -20,6 +22,8 @@ interface FormData {
   date: string;
   location: string;
   tickets: number | string;
+  genre: string;
+  ticketPrice: number | string;
 }
 interface Venue {
   name: string;
@@ -27,6 +31,9 @@ interface Venue {
   capacity: number;
   image_one: string;
   image_two: string;
+}
+interface Genre {
+  name: string;
 }
 
 export default function Page() {
@@ -36,10 +43,13 @@ export default function Page() {
     date: "",
     location: "",
     tickets: "",
+    genre: "",
+    ticketPrice: "",
   });
 
   const [selectedVenue, setSelectedVenue] = useState<Venue | null>(null);
   const [venues, setVenues] = useState<Venue[]>([]);
+  const [genres, setGenre] = useState<Genre[]>([]);
   const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
   const dispatch = useDispatch();
 
@@ -52,27 +62,69 @@ export default function Page() {
       const venue = venues.find((v) => v.name === value);
       setSelectedVenue(venue || null);
     } else if (name === "tickets") {
+      if (/^\d*$/.test(value)) {
+        // allow only numeric input
+        setFormData((prev) => ({
+          ...prev,
+          [name]: value,
+        }));
+      }
+    } else if (name === "ticketPrice") {
+      if (/^\d*\.?\d{0,2}$/.test(value)) {
+        // Allow numbers with max 2 decimals
+        setFormData((prev) => ({
+          ...prev,
+          [name]: value, // store value as string first
+        }));
+      }
+    } else if (name === "date") {
+      const selectedDate = new Date(value);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      if (selectedDate < today) {
+        alert("The event date cannot be in the past.");
+        return;
+      }
       setFormData((prev) => ({
         ...prev,
-        [name]: Math.max(0, parseInt(value) || 0),
+        [name]: value,
       }));
     } else {
-      // For all other fields (title, date, description, etc.)
       setFormData((prev) => ({
         ...prev,
         [name]: value,
       }));
     }
-
-    console.log("handleChange:", name, value);
   };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     const venueCapacity = selectedVenue ? selectedVenue.capacity : Infinity;
+    const selectedDate = new Date(formData.date);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
 
-    if (Number(formData.tickets) > venueCapacity) {
+    if (selectedDate < today) {
+      alert("The event date cannot be in the past.");
+      return;
+    }
+
+    const ticketCount = Number(formData.tickets);
+    const ticketPrice = Number(formData.ticketPrice);
+
+    if (isNaN(ticketCount) || ticketCount <= 0) {
+      alert("Please enter a valid number of tickets.");
+      return;
+    }
+
+    if (ticketCount > venueCapacity) {
       alert(`Ticket count exceeds venue capacity of ${venueCapacity}.`);
+      return;
+    }
+
+    if (isNaN(ticketPrice) || ticketPrice <= 0) {
+      alert("Ticket price must be greater than €0.");
       return;
     }
 
@@ -84,7 +136,9 @@ export default function Page() {
         date: formData.date,
         venueImageOne: selectedVenue?.image_one || "",
         description: formData.description,
-        tickets: Number(formData.tickets),
+        tickets: ticketCount,
+        genre: formData.genre,
+        ticketPrice: Number(ticketPrice.toFixed(2)),
       })
     );
     setTimeout(() => {
@@ -98,6 +152,8 @@ export default function Page() {
       date: "",
       location: "",
       tickets: "",
+      genre: "",
+      ticketPrice: "",
     });
   };
   if (status === "loading") {
@@ -138,9 +194,10 @@ export default function Page() {
       </Modal>
 
       <VenueSelector onVenuesLoad={setVenues} />
+      <GenreSelector onGenresLoad={setGenre} />
+
       {status !== "success" && (
         <main className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-          {/* Fix the narrow issue by making this div take full width */}
           <div className="flex w-full max-w-screen-lg bg-white shadow-lg rounded-lg overflow-hidden">
             {/* Left: Form Section */}
             <div className="w-1/2 p-10">
@@ -188,13 +245,35 @@ export default function Page() {
                 </Select>
                 <TextInput
                   id="tickets"
-                  type="number"
+                  type="text"
                   name="tickets"
                   placeholder="Number of Tickets"
                   value={formData.tickets}
                   onChange={handleChange}
                   required
                 />
+                <TextInput
+                  id="ticketPrice"
+                  type="text"
+                  name="ticketPrice"
+                  placeholder="Ticket Price (€)"
+                  value={formData.ticketPrice}
+                  onChange={handleChange}
+                  required
+                />
+                <Select
+                  id="genre"
+                  name="genre"
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">Select a genre</option>
+                  {genres.map((genre) => (
+                    <option key={genre.name} value={genre.name}>
+                      {genre.name}
+                    </option>
+                  ))}
+                </Select>
                 <Button type="submit" className="w-full">
                   Create Event
                 </Button>

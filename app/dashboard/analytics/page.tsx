@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { Bar, Pie } from "react-chartjs-2";
 // import chart.js so it can register its components automatically
