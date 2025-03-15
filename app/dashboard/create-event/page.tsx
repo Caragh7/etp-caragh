@@ -13,7 +13,7 @@ import VenueSelector from "../../selectors/VenueSelector";
 import { useDispatch } from "react-redux";
 import { addMyEvent } from "@/app/store/myEventsSlice";
 import Link from "next/link";
-
+import { addNotification } from "@/app/store/notificationsSlice";
 import GenreSelector from "@/app/selectors/GenreSelector";
 
 interface FormData {
@@ -142,19 +142,26 @@ export default function Page() {
       })
     );
     setTimeout(() => {
-      setStatus("success");
-    }, 5000);
+      setStatus("idle");
 
-    console.log("Event Created:", formData);
-    setFormData({
-      title: "",
-      description: "",
-      date: "",
-      location: "",
-      tickets: "",
-      genre: "",
-      ticketPrice: "",
-    });
+      dispatch(
+        addNotification({
+          message: "New event created successfully!",
+          type: "success",
+        })
+      );
+
+      console.log("Event Created:", formData);
+      setFormData({
+        title: "",
+        description: "",
+        date: "",
+        location: "",
+        tickets: "",
+        genre: "",
+        ticketPrice: "",
+      });
+    }, 1000);
   };
   if (status === "loading") {
     // Show a loading spinner or page
@@ -170,29 +177,6 @@ export default function Page() {
 
   return (
     <div className="bg-gray-100 p-4">
-      {/* Success Modal appears if status === "success" */}
-      <Modal
-        show={status === "success"}
-        onClose={() => setStatus("idle")}
-        size="md"
-      >
-        <Modal.Header className="text-gray-800 font-bold">
-          🥳 Event Created!
-        </Modal.Header>
-        <Modal.Body>
-          <p className="text-lg mb-4 text-gray-600">
-            Your event was successfully created.
-            <br />
-            <Link
-              href="/dashboard/my-events"
-              className="text-blue-600 underline"
-            >
-              Go to My Events
-            </Link>
-          </p>
-        </Modal.Body>
-      </Modal>
-
       <VenueSelector onVenuesLoad={setVenues} />
       <GenreSelector onGenresLoad={setGenre} />
 

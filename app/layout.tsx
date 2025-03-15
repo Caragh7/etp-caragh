@@ -1,6 +1,7 @@
 import "./globals.css";
 import Header from "./components/Header";
 import Providers from "./providers";
+import NotificationToast from "./components/NotificationToast";
 
 export const metadata = {
   title: "Event Ticketing Platform",
@@ -19,7 +20,10 @@ export default function RootLayout({
     <html lang="en">
       <body className="bg-white flex flex-col min-h-screen w-full overflow-x-hidden">
         <Header />
-        <Providers>{children}</Providers>
+        <Providers>
+          <NotificationToast />
+          {children}
+        </Providers>
       </body>
     </html>
   );

@@ -9,11 +9,10 @@ export default function Page() {
   return (
     <div className="bg-gray-100">
       <main className="bg-gray-100 min-h-screen flex items-center justify-center">
-        {/* Dashboard Wrapper - Card Style */}
         <div className="w-full max-w-7xl bg-white p-8 shadow-lg rounded-lg">
-          {/* Dashboard Layout - Sidebar & Content */}
+          {/* sidebar and content */}
           <div className="flex">
-            {/* Sidebar */}
+            {/* sidebar menu */}
             <aside className="w-64 bg-gray-50 p-6 rounded-lg shadow-md">
               <h2 className="text-xl text-gray-800 font-bold mb-6">
                 Event Dashboard
@@ -49,13 +48,13 @@ export default function Page() {
               </ul>
             </aside>
 
-            {/* Main Dashboard Content */}
+            {/* main dashboard content */}
             <div className="flex-1 p-6">
               <h1 className="text-3xl font-bold text-gray-800 mb-6">
                 Overview 🎉
               </h1>
 
-              {/* Quick Stats */}
+              {/* dummy stats */}
               <div className="grid grid-cols-3 gap-6 mb-6">
                 <div className="bg-blue-100 p-4 shadow rounded-lg">
                   <h3 className="text-lg text-gray-800 font-semibold">
@@ -77,7 +76,7 @@ export default function Page() {
                 </div>
               </div>
 
-              {/* Manage Events & Venues */}
+              {/* manage events and venues*/}
               <div className="grid grid-cols-2 gap-6">
                 <div className="bg-white shadow-lg rounded-lg p-6">
                   <h2 className="text-xl font-bold text-gray-800 mb-4">
@@ -110,7 +109,7 @@ export default function Page() {
                 </div>
               </div>
 
-              {/* Recent Events */}
+              {/* recent events */}
               <div className="mt-8 bg-white shadow-lg rounded-lg p-6">
                 <h2 className="text-xl font-bold text-gray-800 mb-4">
                   Recent Events
