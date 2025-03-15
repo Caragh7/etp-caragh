@@ -1,18 +1,10 @@
 "use client";
 import Footer from "@/app/components/Footer";
-import {
-  Button,
-  TextInput,
-  Textarea,
-  Select,
-  Modal,
-  Spinner,
-} from "flowbite-react";
+import { Button, TextInput, Textarea, Select, Spinner } from "flowbite-react";
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import VenueSelector from "../../selectors/VenueSelector";
 import { useDispatch } from "react-redux";
 import { addMyEvent } from "@/app/store/myEventsSlice";
-import Link from "next/link";
 import { addNotification } from "@/app/store/notificationsSlice";
 import GenreSelector from "@/app/selectors/GenreSelector";
 
