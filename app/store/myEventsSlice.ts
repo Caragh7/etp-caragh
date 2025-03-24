@@ -31,7 +31,7 @@ const initialState: MyEventsState = {
       title: "Metallica",
       date: "2025-07-20",
       venueImageOne: "/etp-caragh/images/croke-park-1.jpg",
-      description: "A once in a lifetime experience world at Croke Park",
+      description: "A once in a lifetime experience at Croke Park",
       tickets: 80000,
       genre: "Metal",
       ticketPrice: 140.0,

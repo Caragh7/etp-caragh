@@ -48,7 +48,7 @@ const initialState: VenuesState = {
       image_one: "/etp-caragh/images/o2_2.jpg",
       image_two: "/etp-caragh/images/o2_1.jpg",
       description:
-        " A world-class entertainment venue in London, featuring concerts, sporting events, and cultural performances in a massive dome-shaped arena",
+        "A world-class entertainment venue in London, featuring concerts, sporting events, and cultural performances in a massive dome-shaped arena",
     },
     {
       name: "Slane Castle",
